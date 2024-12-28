@@ -15,32 +15,6 @@ from io import BytesIO
 from twilio.rest import Client
 
 
-client = Client('ACdd88050d1dbdf47ed9c5e00507bf27e0', 'ec77154b82309074535df6469286af17')
-
-@app.route('/send_sms', methods=['get'])
-def send_sms():
-    # Lấy số điện thoại người nhận và nội dung tin nhắn từ request
-    to_phone_number = '+12314034773'  # Số điện thoại người nhận
-    message_body = 'Hello'  # Nội dung tin nhắn
-
-    if not to_phone_number or not message_body:
-        return jsonify({'error': 'Thiếu thông tin số điện thoại hoặc nội dung tin nhắn'}), 400
-
-    try:
-        # Gửi SMS
-        message = client.messages.create(
-            body=message_body,  # Nội dung tin nhắn
-            from_='+12314034773',  # Số điện thoại Twilio của bạn
-            to= '+18777804236' # Số điện thoại người nhận
-        )
-        return jsonify({'message': 'SMS đã được gửi thành công', 'sid': message.sid}), 200
-
-    except Exception as e:
-        return jsonify({'error': str(e)}), 500
-
-
-
-
 @app.route('/comments', methods=['post'])
 @login_required
 def addcomment():
