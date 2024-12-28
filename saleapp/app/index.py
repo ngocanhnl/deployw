@@ -12,7 +12,6 @@ from flask_login import login_user, logout_user, current_user, login_required
 from datetime import datetime
 import pandas as pd
 from io import BytesIO
-from twilio.rest import Client
 
 
 @app.route('/comments', methods=['post'])
