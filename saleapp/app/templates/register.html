@@ -28,7 +28,7 @@
       <label for="confirm">Xác nhận mật khẩu</label>
     </div>
     <div class="form-floating mb-3 mt-3">
-      <input type="file" accept=".png,.jpg" class="form-control" id="avatar" placeholder="Ảnh đại diện" name="avatar">
+      <input type="file" name="avatar" accept=".png,.jpg" class="form-control" id="avatar" placeholder="Ảnh đại diện" >
       <label for="avatar">Ảnh đại diện</label>
     </div>
     <div class="mb-3">
@@ -47,6 +47,7 @@
 
         avatarInput.addEventListener('change', function(event) {
             const file = event.target.files[0];
+            console.log(file)
             if (file) {
                 const reader = new FileReader();
                 reader.onload = function(e) {

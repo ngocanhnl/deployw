@@ -170,7 +170,7 @@ def create_bill(medicineMoney,serviceFee, totalFee, cashier_id, patient_id):
 
 def update_medicine_bill(bill_id,medicine_bill_id):
     medicine_bill = db.session.query(MedicineBill).filter(MedicineBill.id==medicine_bill_id).first()
-    print(medicine_bill)
+    # print(medicine_bill)
     medicine_bill.bill_id = bill_id
     db.session.commit()
     return medicine_bill
@@ -212,7 +212,11 @@ def get_list_patient():
     return Patient.query.all()
 
 def get_info_user2(id):
-    return db.session.query(Patient).join(User, User.id==Patient.id).filter(Patient.id==id).first()
+    a = db.session.query(Patient).join(User, User.id==Patient.id).filter(Patient.id==id).first()
+    if(a):
+        return a
+    else:
+        return db.session.query(User).filter(User.id==id).first()
 
 def get_info_user3(id):
     return db.session.query(User).filter(User.id==id).first()
@@ -225,7 +229,7 @@ def get_info_user3(id):
 
 def change_info_user(name,address,sex, birth, avatar, user_id):
     user = db.session.query(User).filter(User.id==user_id).first()
-    print(user)
+    # print(user)
     user.name = name
     user.address = address
     user.birthday = birth
@@ -257,7 +261,7 @@ def get_list_patient2(appointment_date):
     target_date = datetime.strptime(appointment_date, '%Y-%m-%d').date()
     # return db.session.query(Product.id, Product.name, func.sum(ReceiptDetails.quantity * ReceiptDetails.unit_price)) \
     #     .join(ReceiptDetails, ReceiptDetails.product_id.__eq__(Product.id)).group_by(Product.id).all()
-    print(target_date)
+    # print(target_date)
     dataTest = db.session.query(Patient.id,Patient.name, Patient.sex, Patient.birthday, Patient.address)\
                 .join(ExaminationSchedule, ExaminationSchedule.patient_id==User.id) \
                 .group_by(Patient.id) \
@@ -287,7 +291,7 @@ def get_list_patient2(appointment_date):
 def create_appointment(date_examination, note, name, birth, sex, time,address):
     examination_schedules = db.session.query(ExaminationSchedule).filter(func.date(ExaminationSchedule.date_examination).__eq__(date_examination)).all()
     time_frame = TimeFrame.query.filter(TimeFrame.time == time).first()
-    print(time_frame)
+    # print(time_frame)
     time_frame_id = time_frame.id
     patient = Patient(name,sex=sex,birthday=birth, address=address, avatar=None)
     db.session.add(patient)
@@ -351,11 +355,12 @@ def create_patient(name,avatar,account_id):
     if avatar:
         res = cloudinary.uploader.upload(avatar)
         avatar = res.get('secure_url')
+    print(avatar)
     patient = User(name=name,avatar=avatar, account_id=account_id)
     db.session.add(patient)
     db.session.commit()
     return patient
 if __name__ == '__main__':
     with app.app_context():
-        print(amount_medicine_stats_by_timeewqeqe(time='12'))
+        print(get_list_patient2(time='12'))
 

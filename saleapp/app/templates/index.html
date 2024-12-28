@@ -62,6 +62,14 @@
             </div>
 
         </form>
+        <div class="alert-container">
+            {% if messages %}
+                <button id="dong" onclick="closeNoti()">Đóng</button>
+                <div id="messageAlert" class="alert {% if messages.status == 'success' %}alert-success{% else %}alert-danger{% endif %}  ">
+                    {{ messages.message }}
+                </div>
+            {% endif %}
+        </div>
 
     </div>
 
@@ -98,16 +106,39 @@
 </ul>
 
 <script>
-    let noti = {{messages}}
-    console.log(noti)
-    if(noti !==""){
-        if(noti.status="success"){
-            let divSuccess = document.getElementById("successDIv")
-            divSuccess.style.display = "block"
+
+
+    let divNoti = document.getElementById("dong")
+    console.log(divNoti)
+    divNoti.addEventListener('click', (e)=>{
+        let divMeeesssage = document.getElementById("messageAlert")
+        divNoti.style.display = 'none'
+        divMeeesssage.style.display = 'none'
+    })
+
+
+
+    window.addEventListener('DOMContentLoaded', (event) => {
+        let alertElement = document.getElementById('messageAlert');
+        console.log(alertElement)
+        // Nếu có thông báo, ẩn nó sau 5 giây
+        if (alertElement) {
+            setTimeout(function () {
+                alertElement.classList.remove('show'); // Loại bỏ class 'show' để ẩn thông báo
+                alertElement.classList.add('fade'); // Thêm class 'fade' để tạo hiệu ứng mờ dần
+            }, 5000); // 5 giây
         }
+    });
+    // let noti = {{messages}}
+    // console.log(noti)
+    // if(noti !==""){
+    //     if(noti.status="success"){
+    //         let divSuccess = document.getElementById("successDIv")
+    //         divSuccess.style.display = "block"
+    //     }
 
 
-    }
+
 
 
 

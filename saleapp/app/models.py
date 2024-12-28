@@ -45,9 +45,10 @@ class User(db.Model):
     id = Column(Integer, primary_key = True, autoincrement = True)
     name = Column(String(50), nullable = True)
     sex = Column(String(50), nullable=True)
+    # phone = Column(String(12), nullable=True)
     birthday = Column(DATETIME, nullable=True)
     address = Column(String(150), nullable=True)
-    avatar = Column(String(150), default = "https://res.cloudinary.com/dxxwcby8l/image/upload/v1646729533/zuur9gzztcekmyfenkfr.jpg")
+    avatar = Column(String(150), default = "")
     account_id = Column(Integer, ForeignKey('account.id'), nullable=True)
     type = Column(String(50))  # Trường này dùng để phân biệt lớp con
     __mapper_args__ = {
@@ -230,8 +231,8 @@ if __name__ == '__main__':
         #
         # u = Patient(name='A',sex="female",birthday="2000-01-02",address="ABC",avatar="123",insuranced="123")
         # db.session.add(u)
-        # a = Administrator(name='A', sex="female", birthday="2000-01-02", address="ABC", account_id= 3,
-        #              avatar="123", inauguration="2000-01-01",salary='Aks')
+        a = Administrator(name='A', sex="female", birthday="2000-01-02", address="ABC", account_id= 1, phone= '0798536554',
+                     avatar="123", inauguration="2000-01-01",salary='Aks')
         # db.session.add(a)
         # d = Cashier(name='Cashier2', sex="female", birthday="2000-01-02", address="ABC", avatar="123",skill="CNTT" , salary='aksj',account_id=12)
         # db.session.add(d)
@@ -241,7 +242,7 @@ if __name__ == '__main__':
         # db.session.add(k)
         # aa = Account(username="admin", password="123",account_role=UserRole.Admin)
         # db.session.add(aa)
-        # aa = Account(username="patient1", password="123", account_role=UserRole.Nurse)
+        # aa = Account(username="admin", password="123", account_role=UserRole.Admin)
         # db.session.add(aa)
         # d = Doctor(name='Doc',sex="female",birthday="2000-01-02",address="ABC",avatar="123",specialist = 'ABC',yearOfExperience = 3,salary='1',account_id = aa.id)
         # db.session.add(d)

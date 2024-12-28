@@ -12,7 +12,7 @@ import dao
 class AdminView(ModelView):
     def is_accessible(self):
 
-        return current_user.is_authenticated and current_user.account_role.__eq__(UserRole.Admin)
+        return current_user.is_authenticated and current_user.account_role==(UserRole.Admin)
 
 # if isinstance(doctor1, Doctor):
 #     print("doctor1 is an instance of Doctor")
@@ -28,6 +28,7 @@ class DoctorView(AdminView):
 
 class MedicineView(AdminView):
     column_list = ['name','description']
+    column_filters = ['name']
 class MedicineUnitView(AdminView):
     column_list = ['id','unit','medicines']
 
@@ -51,7 +52,7 @@ class StatsView(AuthenticatedView):
     @expose('/')
     def index(self):
 
-        print(request.args.get('month'))
+        # print(request.args.get('month'))
         month=request.args.get('month')
         year=request.args.get('year')
         if (year):
@@ -62,11 +63,11 @@ class StatsView(AuthenticatedView):
             pass
         else:
             month=12
-        print(month)
+        # print(month)
         total_fee_in_month = dao.revenue_stats_by_time2(time=month,year=year)
 
         records = dao.revenue_stats_by_time(time=month,year=year)
-        print(records)
+        # print(records)
         tyle = []
         ngay = []
         if(records):
@@ -80,10 +81,10 @@ class StatsView(AuthenticatedView):
 
        # Stats2
         records2 = dao.amount_medicine_stats_by_time(time=12)
-        print("122")
-        print(total_fee_in_month)
+        # print("122")
+        # print(total_fee_in_month)
         if(dao.revenue_stats_by_time(time=month,year=year) is not None and total_fee_in_month):
-            print("133")
+            # print("133")
             return self.render('admin/stats.html',year=year, records= dao.revenue_stats_by_time(time=month,year=year), total = total_fee_in_month[0][1],tyle = tyle,ngay = ngay, records2 = records2,month=month)
         else:
             return self.render('admin/stats2.html', month=month, year=year)
